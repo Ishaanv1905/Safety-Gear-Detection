@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Safety Gear Detection</title>
+</head>
+<body>
+  <h2>Safety Gear Detection</h2>
+  <button id="startBtn">Open Camera</button><br><br>
+  <video id="video" width="640" height="480" autoplay muted></video>
+  <canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
+  <img id="resultImg" alt="Detection Result"/>
+
+  <script>
+    const video = document.getElementById("video");
+    const canvas = document.getElementById("canvas");
+    const resultImg = document.getElementById("resultImg");
+
+    document.getElementById("startBtn").onclick = async () => {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      video.srcObject = stream;
+
+      setInterval(() => {
+        // Draw the current video frame to the canvas
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        // Convert canvas to base64 image
+        canvas.toBlob(async (blob) => {
+          const formData = new FormData();
+          formData.append('image', blob, 'frame.jpg');
+
+          const response = await fetch('http://localhost:5000/predict', {
+            method: 'POST',
+            body: formData
+          });
+
+          const data = await response.blob();
+          resultImg.src = URL.createObjectURL(data);
+        }, 'image/jpeg');
+      }, 1000); // Send a frame every 1 sec
+    };
+  </script>
+</body>
+</html>
