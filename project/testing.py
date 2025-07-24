@@ -1,7 +1,7 @@
 from ultralytics import YOLO
 
 # Load model
-model = YOLO(r"C:\Users\Ishaan Verma\Desktop\ACT\VLM-Safety Gear Detection\project\yolo10n.pt")
+model = YOLO(r"C:\Users\Ishaan Verma\Desktop\ACT\VLM-Safety Gear Detection\project\yolo11n.pt")
 
 # Run inference on folder of images
 results = model.predict(
