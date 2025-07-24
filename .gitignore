@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environments
+venv/
+.env
+
+# VSCode and OS junk
+.vscode/
+.DS_Store
+
+# Model weights
+*.pt
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# Logs or temp
+*.log
